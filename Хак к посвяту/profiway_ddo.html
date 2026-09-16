@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ВузСравни — ДДО опросник</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="test-styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script_DDO.js" defer></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container py-2">
+        <a href="index.html" class="brand">Вуз<span>Сравни</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto gap-lg-3">
+                <li class="nav-item"><a href="index.html" class="nav-link">Вузы</a></li>
+                <li class="nav-item"><a href="directions.html" class="nav-link">Направления</a></li>
+                <li class="nav-item"><a href="profiway_main.html" class="nav-link active">Профориентация</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <span class="hero-badge">✦ Тест 1 из 3</span>
+        <h1>Дифференциально-<br><span class="gradient-text">диагностический</span> опросник</h1>
+        <p class="hero-description mt-4">
+            Опросник ДДО Е.А. Климова в модификации А.А. Азбель.
+            В основу методики положена схема классификации профессий по предмету труда.
+        </p>
+        <div class="mt-4 d-flex flex-wrap gap-2">
+            <a href="profiway_main.html" class="btn-soft">← К тестам</a>
+            <a href="profiway_pp.html" class="btn-soft">Следующий тест →</a>
+        </div>
+    </div>
+</header>
+
+<section class="quiz-container">
+    <div class="container">
+
+        <div class="intro-card">
+            <h3 style="font-weight:900; margin-bottom:12px;">Инструкция</h3>
+            <p>
+                Внимательно прочитайте вопросы и выберите один из двух вариантов
+                ответа в каждой паре. Предположите, что после соответствующего обучения
+                вы способны одинаково успешно выполнять любую работу.
+            </p>
+            <p style="margin-bottom:6px;"><b>Предмет труда бывает:</b></p>
+            <ul>
+                <li>человек — природа;</li>
+                <li>человек — техника;</li>
+                <li>человек — знаковая система;</li>
+                <li>человек — художественный образ;</li>
+                <li>человек — человек.</li>
+            </ul>
+            <p style="margin-bottom:0;">Всего 30 вопросов. Отвечайте последовательно.</p>
+        </div>
+
+        <div class="progress-sticky">
+            <div class="progress-text">
+                <span>Прогресс</span>
+                <span id="progressCount">0 / 30</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <form name="opros" onsubmit="return false;">
+
+            <div class="question">
+                <div class="question-number">Вопрос 1</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr1" value="A" required /><span>Выращивать и дрессировать служебных собак для поиска наркотиков</span></label>
+                    <label class="option"><input type="radio" name="vopr1" value="B" required /><span>Разрабатывать новые модели электронной бытовой техники</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 2</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr2" value="E" required /><span>Спасать людей после аварии и землетрясения</span></label>
+                    <label class="option"><input type="radio" name="vopr2" value="C" required /><span>Заверять документы, оформлять доверенности, договоры</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 3</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr3" value="D" required /><span>Петь в музыкальной группе</span></label>
+                    <label class="option"><input type="radio" name="vopr3" value="E" required /><span>Интенсивно тренироваться, совершенствоваться и добиваться новых спортивных результатов</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 4</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr4" value="B" required /><span>Налаживать работу компьютеров и оборудования</span></label>
+                    <label class="option"><input type="radio" name="vopr4" value="C" required /><span>Рассказывать о товаре, убеждать людей приобретать его</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 5</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr5" value="A" required /><span>Переводить научные тексты</span></label>
+                    <label class="option"><input type="radio" name="vopr5" value="D" required /><span>Писать рассказы, сценарии, фельетоны</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 6</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr6" value="E" required /><span>Тренировать свой организм, чтобы он выдерживал воздействие больших физических нагрузок</span></label>
+                    <label class="option"><input type="radio" name="vopr6" value="A" required /><span>Разрабатывать мероприятия по охране диких растений</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 7</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr7" value="B" required /><span>Ремонтировать оргтехнику, компьютеры, телефоны</span></label>
+                    <label class="option"><input type="radio" name="vopr7" value="C" required /><span>Исправлять смысловые и стилистические ошибки в готовящихся к печати текстах</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 8</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr8" value="D" required /><span>Заниматься флористикой, оформлять помещения цветами</span></label>
+                    <label class="option"><input type="radio" name="vopr8" value="A" required /><span>Анализировать состояние растений и животных в загрязненных условиях среды</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 9</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr9" value="B" required /><span>Управлять автомобилем, автобусом, трейлером, локомотивом поезда</span></label>
+                    <label class="option"><input type="radio" name="vopr9" value="D" required /><span>Микшировать музыку или корректировать фотоснимки с помощью компьютера</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 10</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr10" value="E" required /><span>Ежедневно тренировать свои атлетические навыки в спортивном зале, в бассейне, на стадионе</span></label>
+                    <label class="option"><input type="radio" name="vopr10" value="B" required /><span>Отлаживать работу спортивного автомобиля и заменять механизмы в случае неисправности</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 11</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr11" value="E" required /><span>Давать людям консультации по туристическим маршрутам других городов и стран</span></label>
+                    <label class="option"><input type="radio" name="vopr11" value="C" required /><span>Оформлять витрины универмагов; заниматься оформлением концертов и шоу</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 12</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr12" value="A" required /><span>Разводить декоративных рыб и ухаживать за аквариумами в офисах</span></label>
+                    <label class="option"><input type="radio" name="vopr12" value="E" required /><span>Оказывать людям медицинскую помощь</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 13</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr13" value="C" required /><span>Упорядочивать документацию фирмы и подготавливать новую (договора, счета, ведомости, доверенности)</span></label>
+                    <label class="option"><input type="radio" name="vopr13" value="D" required /><span>Вырабатывать навыки красивой походки и пластичных движений для профессионального выступления на подиуме</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 14</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr14" value="A" required /><span>Изучать генетику, выводить новые сорта растений</span></label>
+                    <label class="option"><input type="radio" name="vopr14" value="C" required /><span>Работать в фондах архивов, находить необходимые документы</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 15</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr15" value="E" required /><span>Сопровождать людей в сложных туристических походах в роли инструктора</span></label>
+                    <label class="option"><input type="radio" name="vopr15" value="D" required /><span>Придумывать и отрабатывать сложные акробатические трюки, спортивные номера</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 16</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr16" value="A" required /><span>Лечить кошек, собак, лошадей и пр.</span></label>
+                    <label class="option"><input type="radio" name="vopr16" value="B" required /><span>Осуществлять сборку компьютеров</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 17</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr17" value="E" required /><span>Искать нужных людей, проводить подбор персонала в различные фирмы</span></label>
+                    <label class="option"><input type="radio" name="vopr17" value="C" required /><span>Проводить финансовый анализ рынка ценных бумаг</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 18</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr18" value="D" required /><span>Играть на сцене, сниматься в кино, ставить трюки</span></label>
+                    <label class="option"><input type="radio" name="vopr18" value="E" required /><span>Тренировать и репетировать красивые и точные движения перед спортивным выступлением</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 19</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr19" value="B" required /><span>Налаживать работу медицинского лазера, ультразвуковой аппаратуры</span></label>
+                    <label class="option"><input type="radio" name="vopr19" value="E" required /><span>Преподавать различные предметы в школе, техникуме, институте</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 20</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr20" value="C" required /><span>Рассчитывать экономный путь транспортировки товара до потребителя</span></label>
+                    <label class="option"><input type="radio" name="vopr20" value="D" required /><span>Оформлять иллюстрациями сайты, книги, журналы</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 21</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr21" value="E" required /><span>Осуществлять постоянную психологическую и физическую подготовку к соревнованиям, турнирам</span></label>
+                    <label class="option"><input type="radio" name="vopr21" value="A" required /><span>Участвовать в экспедициях, посвящённых изучению природных явлений</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 22</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr22" value="B" required /><span>Строить дома по планам, делать разводку электричества в соответствии с проектом</span></label>
+                    <label class="option"><input type="radio" name="vopr22" value="E" required /><span>Работать с финансовыми законами и кодексами</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 23</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr23" value="D" required /><span>Проектировать садово-парковые зоны, оформлять участки с помощью растений</span></label>
+                    <label class="option"><input type="radio" name="vopr23" value="A" required /><span>Анализировать молекулярный состав крови</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 24</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr24" value="B" required /><span>Проектировать новое производственное оборудование, дома</span></label>
+                    <label class="option"><input type="radio" name="vopr24" value="D" required /><span>Производить архитектурно-восстановительные работы исторических мест</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 25</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr25" value="E" required /><span>Оттачивать мастерство выполнения спортивного упражнения, превозмогая усталость и страх</span></label>
+                    <label class="option"><input type="radio" name="vopr25" value="B" required /><span>Разрабатывать новые модели спортивных тренажёров, велосипедов и другое спортивное оборудование</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 26</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr26" value="C" required /><span>Организовывать праздники, выступать в роли тамады</span></label>
+                    <label class="option"><input type="radio" name="vopr26" value="D" required /><span>Вести концертные программы, объявлять зрителям имена выступающих и названия номеров</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 27</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr27" value="A" required /><span>Изучать жизнь организмов с помощью электронного микроскопа</span></label>
+                    <label class="option"><input type="radio" name="vopr27" value="C" required /><span>Оказывать людям психологическую помощь, работать на телефоне доверия</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 28</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr28" value="C" required /><span>Обрабатывать, анализировать и обобщать социологические данные</span></label>
+                    <label class="option"><input type="radio" name="vopr28" value="D" required /><span>Профессионально работать над красотой своей фигуры и внешности</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 29</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr29" value="A" required /><span>Разрабатывать средства защиты растений от вредителей и вирусов</span></label>
+                    <label class="option"><input type="radio" name="vopr29" value="B" required /><span>Писать компьютерные программы</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 30</div>
+                <div class="question-title">Что бы вы предпочли?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr30" value="E" required /><span>Консультировать людей в фитнес-зале, в бассейне, на спортивной площадке</span></label>
+                    <label class="option"><input type="radio" name="vopr30" value="D" required /><span>Тренировать общую выносливость и совершенствовать отдельные спортивные или артистические навыки</span></label>
+                </div>
+            </div>
+
+            <div class="submit-wrap">
+                <button type="button" class="btn-submit" onclick="check()">Проверить результат</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- RESULT -->
+<section class="result-section" id="result">
+    <div class="container">
+        <div class="text-center mb-4">
+            <span class="hero-badge">✦ Результат</span>
+            <h2 class="section-title mt-2">Твои склонности</h2>
+        </div>
+
+        <div class="result-card">
+            <div class="chart-container"><canvas id="chart"></canvas></div>
+
+            <div class="result-note">
+                <p><b>Расшифровка суммы баллов по каждой шкале:</b></p>
+                <ul>
+                    <li><b>11–12 баллов</b> — ярко выраженная склонность;</li>
+                    <li><b>9–10 баллов</b> — выраженная склонность;</li>
+                    <li><b>6–8 баллов</b> — склонность выражена средне;</li>
+                    <li><b>3–5 баллов</b> — склонность не выражена;</li>
+                    <li><b>0–2 балла</b> — работа с таким предметом труда активно отвергается.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="result-card interpretation">
+            <h3>Содержательная интерпретация</h3>
+
+            <h4>Человек — природа</h4>
+            <p>Профессии, связанные с объектами живой природы: агроном, фермер, кинолог, ветеринар, цветовод, микробиолог, пчеловод, лесник. Биологические объекты сложны, изменчивы, нестандартны. Важны интуиция, умение заботиться, инициативность и самостоятельность.</p>
+
+            <h4>Человек — техника</h4>
+            <p>Создание, обслуживание и эксплуатация технических устройств: водитель, пилот, машинист, инженер-технолог, а также рабочие профессии. Нужны технический склад ума, точность, склонность к конкретным действиям.</p>
+
+            <h4>Человек — знаковая система</h4>
+            <p>Работа с текстами, документами, базами данных, формулами: переводчик, программист, бухгалтер, экономист, корректор, аналитик. Важны пунктуальность, усидчивость, аналитический склад ума.</p>
+
+            <h4>Человек — художественный образ</h4>
+            <p>Создание и совершенствование художественных образов: художник, скульптор, писатель, режиссёр, дизайнер, реставратор. Важны способности, воображение, готовность действовать в нестандартных ситуациях.</p>
+
+            <h4>Человек — человек</h4>
+            <p>Профессии, связанные с общением и влиянием на людей: врач, учитель, психолог, социальный работник, продавец, тренер. Важно не просто хотеть, но и уметь активно взаимодействовать с людьми.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container text-center">
+        <strong>ВузСравни</strong>
+        <span class="mx-2">•</span>
+        Сервис сравнения университетов
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.navbar .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const nav = document.querySelector('#mainNav');
+            if (nav.classList.contains('show')) {
+                bootstrap.Collapse.getOrCreateInstance(nav).hide();
+            }
+        });
+    });
+
+    // прогресс
+    const questions = document.querySelectorAll('.question');
+    const progressFill = document.getElementById('progressFill');
+    const progressCount = document.getElementById('progressCount');
+
+    function updateProgress() {
+        const answered = document.querySelectorAll('.question.answered').length;
+        const total = questions.length;
+        progressFill.style.width = (answered / total * 100) + '%';
+        progressCount.textContent = answered + ' / ' + total;
+    }
+
+    questions.forEach(q => {
+        q.querySelectorAll('input[type="radio"]').forEach(inp => {
+            inp.addEventListener('change', () => {
+                q.classList.add('answered');
+                updateProgress();
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

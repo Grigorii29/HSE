@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ВузСравни — Опросник профессиональных предпочтений</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="test-styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script_OPP.js" defer></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container py-2">
+        <a href="index.html" class="brand">Вуз<span>Сравни</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto gap-lg-3">
+                <li class="nav-item"><a href="index.html" class="nav-link">Вузы</a></li>
+                <li class="nav-item"><a href="directions.html" class="nav-link">Направления</a></li>
+                <li class="nav-item"><a href="profiway_main.html" class="nav-link active">Профориентация</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <span class="hero-badge">✦ Тест 2 из 3</span>
+        <h1>Опросник профессиональных <span class="gradient-text">предпочтений</span></h1>
+        <p class="hero-description mt-4">
+            Вам будет предложено 30 вопросов. По каждому выберите,
+            какому из двух вариантов ответа вы отдаёте предпочтение.
+        </p>
+        <div class="mt-4 d-flex flex-wrap gap-2">
+            <a href="profiway_main.html" class="btn-soft">← К тестам</a>
+            <a href="profiway_tbp.html" class="btn-soft">Следующий тест →</a>
+        </div>
+    </div>
+</header>
+
+<section class="quiz-container">
+    <div class="container">
+
+        <div class="intro-card">
+            <h3 style="font-weight:900; margin-bottom:12px;">Инструкция</h3>
+            <p>Отмечайте тот ответ, который ближе вам лично — не задумываясь долго. Отвечайте последовательно, пока не закончатся все пункты теста. В конце вам будет предложено проверить результат.</p>
+            <p>В каждом вопросе можно выбрать один из четырёх вариантов: «определённо А», «скорее А, чем Б», «скорее Б, чем А», «определённо Б».</p>
+        </div>
+
+        <div class="progress-sticky">
+            <div class="progress-text"><span>Прогресс</span><span id="progressCount">0 / 30</span></div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <form name="opros" onsubmit="return false;">
+
+            <div class="question">
+                <div class="question-number">Вопрос 1</div>
+                <div class="question-title">Представьте, что вы на выставке. Что вас больше привлекает в экспонатах?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr1" value="AA" required /><span>Определённо вариант А: цвет, совершенство форм</span></label>
+                    <label class="option"><input type="radio" name="vopr1" value="A" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr1" value="F" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr1" value="FF" required /><span>Определённо вариант Б: внутреннее устройство</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 2</div>
+                <div class="question-title">Какие черты характера в человеке вам больше нравятся?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr2" value="BB" required /><span>Определённо вариант А: дружелюбие, чуткость</span></label>
+                    <label class="option"><input type="radio" name="vopr2" value="B" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr2" value="D" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr2" value="DD" required /><span>Определённо вариант Б: мужество, смелость, выносливость</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 3</div>
+                <div class="question-title">Служба быта оказывает людям разные услуги. Считаете ли вы необходимым:</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr3" value="BB" required /><span>Определённо вариант А: развивать эту отрасль</span></label>
+                    <label class="option"><input type="radio" name="vopr3" value="B" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr3" value="F" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr3" value="FF" required /><span>Определённо вариант Б: создавать технику для быта</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 4</div>
+                <div class="question-title">Какое награждение вас больше бы обрадовало?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr4" value="BB" required /><span>Определённо вариант А: за общественную деятельность</span></label>
+                    <label class="option"><input type="radio" name="vopr4" value="B" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr4" value="F" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr4" value="FF" required /><span>Определённо вариант Б: за научное изобретение</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 5</div>
+                <div class="question-title">Вы смотрите военный или спортивный парад. Что больше привлекает ваше внимание?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr5" value="DD" required /><span>Определённо вариант А: слаженность ходьбы, грациозность</span></label>
+                    <label class="option"><input type="radio" name="vopr5" value="D" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr5" value="A" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr5" value="AA" required /><span>Определённо вариант Б: оформление колонн</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 6</div>
+                <div class="question-title">Представьте, что у вас много свободного времени. Чем бы вы охотнее занялись?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr6" value="CC" required /><span>Определённо вариант А: практическим ручным трудом</span></label>
+                    <label class="option"><input type="radio" name="vopr6" value="C" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr6" value="B" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr6" value="BB" required /><span>Определённо вариант Б: общественной работой</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 7</div>
+                <div class="question-title">Какую выставку вы бы с большим удовольствием посмотрели?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr7" value="EE" required /><span>Определённо вариант А: новинок научной аппаратуры</span></label>
+                    <label class="option"><input type="radio" name="vopr7" value="E" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr7" value="C" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr7" value="CC" required /><span>Определённо вариант Б: новых продовольственных товаров</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 8</div>
+                <div class="question-title">Если бы в школе было два кружка, какой бы вы выбрали?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr8" value="AA" required /><span>Определённо вариант А: музыкальный</span></label>
+                    <label class="option"><input type="radio" name="vopr8" value="A" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr8" value="F" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr8" value="FF" required /><span>Определённо вариант Б: технический</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 9</div>
+                <div class="question-title">Если бы вам предоставили пост директора школы, на что бы вы обратили большее внимание?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr9" value="BB" required /><span>Определённо вариант А: на сплочённость коллектива</span></label>
+                    <label class="option"><input type="radio" name="vopr9" value="B" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr9" value="C" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr9" value="CC" required /><span>Определённо вариант Б: на создание удобств</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 10</div>
+                <div class="question-title">Какие журналы вы бы с большим удовольствием читали?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr10" value="AA" required /><span>Определённо вариант А: литературно-художественные</span></label>
+                    <label class="option"><input type="radio" name="vopr10" value="A" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr10" value="E" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr10" value="EE" required /><span>Определённо вариант Б: научно-популярные</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 11</div>
+                <div class="question-title">Что важнее для человека?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr11" value="CC" required /><span>Определённо вариант А: благополучный быт</span></label>
+                    <label class="option"><input type="radio" name="vopr11" value="C" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr11" value="A" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr11" value="AA" required /><span>Определённо вариант Б: пользоваться сокровищницей искусства</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 12</div>
+                <div class="question-title">Для благополучия общества необходимо:</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr12" value="FF" required /><span>Определённо вариант А: техника</span></label>
+                    <label class="option"><input type="radio" name="vopr12" value="F" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr12" value="E" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr12" value="EE" required /><span>Определённо вариант Б: правосудие</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 13</div>
+                <div class="question-title">Какую из двух книг вы бы с большим удовольствием читали?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr13" value="EE" required /><span>Определённо вариант А: о развитии науки</span></label>
+                    <label class="option"><input type="radio" name="vopr13" value="E" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr13" value="D" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr13" value="DD" required /><span>Определённо вариант Б: о достижениях спортсменов</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 14</div>
+                <div class="question-title">В газете две статьи. Какая из них вызвала бы у вас большую заинтересованность?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr14" value="FF" required /><span>Определённо вариант А: о машине нового типа</span></label>
+                    <label class="option"><input type="radio" name="vopr14" value="F" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr14" value="E" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr14" value="EE" required /><span>Определённо вариант Б: о новой научной теории</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 15</div>
+                <div class="question-title">Какая из двух работ на свежем воздухе вас больше бы привлекала?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr15" value="DD" required /><span>Определённо вариант А: с постоянными передвижениями</span></label>
+                    <label class="option"><input type="radio" name="vopr15" value="D" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr15" value="F" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr15" value="FF" required /><span>Определённо вариант Б: работа с машинами</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 16</div>
+                <div class="question-title">Какая, на ваш взгляд, задача школы важнее?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr16" value="BB" required /><span>Определённо вариант А: подготовить к работе с людьми</span></label>
+                    <label class="option"><input type="radio" name="vopr16" value="B" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr16" value="C" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr16" value="CC" required /><span>Определённо вариант Б: подготовить к практической деятельности</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 17</div>
+                <div class="question-title">Что, на ваш взгляд, следует больше ценить у участников самодеятельности?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr17" value="AA" required /><span>Определённо вариант А: то, что они несут искусство и красоту</span></label>
+                    <label class="option"><input type="radio" name="vopr17" value="A" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr17" value="C" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr17" value="CC" required /><span>Определённо вариант Б: общественно полезную работу</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 18</div>
+                <div class="question-title">Какая область деятельности человека в дальнейшем будет иметь доминирующее значение?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr18" value="EE" required /><span>Определённо вариант А: физика</span></label>
+                    <label class="option"><input type="radio" name="vopr18" value="E" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr18" value="D" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr18" value="DD" required /><span>Определённо вариант Б: физическая культура</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 19</div>
+                <div class="question-title">Что обществу принесёт больше пользы?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr19" value="CC" required /><span>Определённо вариант А: забота о благосостоянии граждан</span></label>
+                    <label class="option"><input type="radio" name="vopr19" value="C" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr19" value="B" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr19" value="BB" required /><span>Определённо вариант Б: изучение поведения людей</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 20</div>
+                <div class="question-title">Какого характера научную работу вы бы выбрали?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr20" value="EE" required /><span>Определённо вариант А: работу с книгами</span></label>
+                    <label class="option"><input type="radio" name="vopr20" value="E" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr20" value="D" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr20" value="DD" required /><span>Определённо вариант Б: работу на свежем воздухе в экспедиции</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 21</div>
+                <div class="question-title">Чему бы вы отдали предпочтение в свободное от работы время?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr21" value="AA" required /><span>Определённо вариант А: занятиям по литературе</span></label>
+                    <label class="option"><input type="radio" name="vopr21" value="A" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr21" value="E" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr21" value="EE" required /><span>Определённо вариант Б: опытам по физике, химии</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 22</div>
+                <div class="question-title">В качестве кого вы охотнее поехали бы за границу?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr22" value="DD" required /><span>Определённо вариант А: как известный спортсмен</span></label>
+                    <label class="option"><input type="radio" name="vopr22" value="D" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr22" value="C" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr22" value="CC" required /><span>Определённо вариант Б: как специалист внешней торговли</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 23</div>
+                <div class="question-title">Какие лекции вы бы слушали с большим интересом?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr23" value="AA" required /><span>Определённо вариант А: о выдающихся художниках</span></label>
+                    <label class="option"><input type="radio" name="vopr23" value="A" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr23" value="E" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr23" value="EE" required /><span>Определённо вариант Б: о выдающихся учёных</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 24</div>
+                <div class="question-title">Что вас больше привлекает при чтении книг?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr24" value="BB" required /><span>Определённо вариант А: яркое изображение храбрости героев</span></label>
+                    <label class="option"><input type="radio" name="vopr24" value="B" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr24" value="A" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr24" value="AA" required /><span>Определённо вариант Б: прекрасный литературный стиль</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 25</div>
+                <div class="question-title">Какой профессии вы отдали бы предпочтение?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr25" value="FF" required /><span>Определённо вариант А: малоподвижной, но с созданием техники</span></label>
+                    <label class="option"><input type="radio" name="vopr25" value="F" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr25" value="D" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr25" value="DD" required /><span>Определённо вариант Б: связанной с движением</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 26</div>
+                <div class="question-title">Какие выдающиеся учёные вызывают у вас наибольший интерес?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr26" value="FF" required /><span>Определённо вариант А: Попов и Циолковский</span></label>
+                    <label class="option"><input type="radio" name="vopr26" value="F" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr26" value="E" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr26" value="EE" required /><span>Определённо вариант Б: Менделеев и Павлов</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 27</div>
+                <div class="question-title">На что следовало бы в школе обратить большее внимание?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr27" value="DD" required /><span>Определённо вариант А: на спорт</span></label>
+                    <label class="option"><input type="radio" name="vopr27" value="D" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr27" value="B" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr27" value="BB" required /><span>Определённо вариант Б: на успеваемость учащихся</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 28</div>
+                <div class="question-title">Что бы вас больше всего заинтересовало в печати?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr28" value="AA" required /><span>Определённо вариант А: сообщение об открывшейся художественной выставке</span></label>
+                    <label class="option"><input type="radio" name="vopr28" value="A" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr28" value="B" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr28" value="BB" required /><span>Определённо вариант Б: участие в митинге в защиту прав человека</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 29</div>
+                <div class="question-title">Какой бы вы выбрали пост?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr29" value="FF" required /><span>Определённо вариант А: главного инженера завода</span></label>
+                    <label class="option"><input type="radio" name="vopr29" value="F" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr29" value="C" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr29" value="CC" required /><span>Определённо вариант Б: директора универмага</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 30</div>
+                <div class="question-title">Как вы считаете, что важнее?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="vopr30" value="DD" required /><span>Определённо вариант А: много знать</span></label>
+                    <label class="option"><input type="radio" name="vopr30" value="D" required /><span>Скорее вариант А, чем Б</span></label>
+                    <label class="option"><input type="radio" name="vopr30" value="C" required /><span>Скорее вариант Б, чем А</span></label>
+                    <label class="option"><input type="radio" name="vopr30" value="CC" required /><span>Определённо вариант Б: создавать материальные блага</span></label>
+                </div>
+            </div>
+
+            <div class="submit-wrap">
+                <button type="button" class="btn-submit" onclick="check()">Проверить результат</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- RESULT -->
+<section class="result-section" id="result">
+    <div class="container">
+        <div class="text-center mb-4">
+            <span class="hero-badge">✦ Результат</span>
+            <h2 class="section-title mt-2">Твои предпочтения</h2>
+        </div>
+
+        <div class="result-card">
+            <div class="chart-container"><canvas id="chart"></canvas></div>
+            <div class="result-note">
+                <p>Наименьший возможный балл — 0, наибольший — 30.</p>
+                <p>Сферы с наибольшим количеством баллов можно считать предпочитаемыми. Сферы с наименьшим количеством баллов — отвергаемые.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container text-center">
+        <strong>ВузСравни</strong>
+        <span class="mx-2">•</span>
+        Сервис сравнения университетов
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.navbar .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const nav = document.querySelector('#mainNav');
+            if (nav.classList.contains('show')) {
+                bootstrap.Collapse.getOrCreateInstance(nav).hide();
+            }
+        });
+    });
+
+    const questions = document.querySelectorAll('.question');
+    const progressFill = document.getElementById('progressFill');
+    const progressCount = document.getElementById('progressCount');
+
+    function updateProgress() {
+        const answered = document.querySelectorAll('.question.answered').length;
+        const total = questions.length;
+        progressFill.style.width = (answered / total * 100) + '%';
+        progressCount.textContent = answered + ' / ' + total;
+    }
+
+    questions.forEach(q => {
+        q.querySelectorAll('input[type="radio"]').forEach(inp => {
+            inp.addEventListener('change', () => {
+                q.classList.add('answered');
+                updateProgress();
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

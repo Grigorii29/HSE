@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВузСравни — сравнение вузов</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --purple: #6c2bd9;
+            --purple-dark: #421486;
+            --purple-light: #efe7ff;
+            --pink: #f72585;
+            --pink-light: #fff0f7;
+            --orange: #ff7a18;
+            --green: #16a67a;
+            --text: #241b35;
+            --muted: #7d758c;
+            --border: #ebe6f3;
+            --background: #f8f6fc;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(247,37,133,.10), transparent 30%),
+                radial-gradient(circle at 100% 0%, rgba(108,43,217,.12), transparent 30%),
+                var(--background);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .navbar-custom {
+            background: rgba(255,255,255,.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(108,43,217,.08);
+        }
+        .brand { text-decoration: none; color: var(--purple); font-size: 1.35rem; font-weight: 900; letter-spacing: -.5px; }
+        .brand span { color: var(--pink); }
+        .nav-link { color: #625a70; font-weight: 700; }
+        .nav-link:hover, .nav-link.active { color: var(--purple); }
+
+        .hero { padding: 80px 0 60px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 9px 15px; border-radius: 50px;
+            background: var(--pink-light); color: var(--pink);
+            font-size: .82rem; font-weight: 850; margin-bottom: 20px;
+        }
+        .hero h1 {
+            max-width: 900px;
+            font-size: clamp(2.7rem, 6vw, 4.8rem);
+            line-height: 1.01; letter-spacing: -2.8px;
+            font-weight: 950; margin: 0;
+        }
+        .gradient-text {
+            color: transparent;
+            background: linear-gradient(90deg, var(--purple), var(--pink));
+            background-clip: text; -webkit-background-clip: text;
+        }
+        .hero-description { max-width: 720px; color: var(--muted); font-size: 1.08rem; line-height: 1.7; }
+
+        .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+        .btn-main {
+            border: 0; padding: 13px 21px; border-radius: 14px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white; font-weight: 800; text-decoration: none;
+            box-shadow: 0 10px 25px rgba(108,43,217,.22); transition: .25s ease;
+        }
+        .btn-main:hover { color: white; transform: translateY(-2px); box-shadow: 0 15px 30px rgba(108,43,217,.28); }
+
+        .btn-soft {
+            padding: 13px 21px; border-radius: 14px;
+            background: white; border: 1px solid var(--border);
+            color: var(--purple); text-decoration: none;
+            font-weight: 800; transition: .25s ease;
+        }
+        .btn-soft:hover { color: var(--pink); transform: translateY(-2px); }
+
+        .section { padding: 70px 0; }
+        .section-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; letter-spacing: -1px; }
+        .section-description { max-width: 650px; color: var(--muted); line-height: 1.65; }
+
+        .university-card {
+            height: 100%; background: white; border: 1px solid var(--border);
+            border-radius: 28px; overflow: hidden;
+            box-shadow: 0 15px 45px rgba(50,25,95,.08); transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .university-card:hover { transform: translateY(-6px); box-shadow: 0 25px 60px rgba(50,25,95,.14); }
+
+        .university-header {
+            padding: 30px; color: white;
+            background: linear-gradient(135deg, #4b1b9c, #7131d2 60%, #ef277d);
+        }
+        .university-header.bauman { background: linear-gradient(135deg, #361276, #6120b5 60%, #ed267d); }
+
+        .university-logo {
+            width: 64px; height: 64px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 18px; background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.22); color: white;
+            font-size: .75rem; font-weight: 950; margin-bottom: 20px;
+        }
+        .university-header h2 { font-size: 1.45rem; line-height: 1.25; font-weight: 900; margin: 0; }
+        .university-direction { margin-top: 9px; color: rgba(255,255,255,.72); font-size: .88rem; }
+
+        /* Проходной балл */
+        .passing-score {
+            margin-top: 18px;
+            padding: 14px 18px;
+            border-radius: 14px;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .passing-score-label {
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: rgba(255,255,255,.7);
+            font-weight: 850;
+        }
+        .passing-score-value {
+            font-size: 1.5rem;
+            font-weight: 950;
+            color: white;
+        }
+
+        /* Ссылка на олимпиады */
+        .olympiads-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 11px 18px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.22);
+            color: white;
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 800;
+            transition: .25s ease;
+        }
+        .olympiads-link:hover {
+            background: rgba(255,255,255,.25);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .criteria { padding: 10px 28px 20px; }
+        .criterion { padding: 17px 0; border-bottom: 1px solid var(--border); }
+        .criterion:last-child { border-bottom: 0; }
+        .criterion-top { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .criterion-name { font-size: .9rem; font-weight: 750; }
+        .criterion-score { color: var(--purple); font-size: .95rem; font-weight: 950; white-space: nowrap; }
+        .progress-custom { height: 7px; margin-top: 9px; background: #eeeaf5; border-radius: 20px; overflow: hidden; }
+        .progress-custom span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--purple), var(--pink)); }
+
+        .reviews-section { padding: 80px 0 100px; }
+        .review-card {
+            height: 100%; background: white; border: 1px solid var(--border);
+            border-radius: 24px; padding: 24px;
+            box-shadow: 0 12px 35px rgba(50,25,95,.07); transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .review-card:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(50,25,95,.12); }
+        .review-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+        .review-logo {
+            width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 14px; color: white; font-size: .68rem; font-weight: 950;
+        }
+        .logo-mgu { background: linear-gradient(135deg, #7929d5, #ef277d); }
+        .logo-bauman { background: linear-gradient(135deg, #4b1b9c, #f72585); }
+        .review-year { padding: 7px 10px; border-radius: 10px; background: var(--purple-light); color: var(--purple); font-size: .76rem; font-weight: 850; }
+        .review-university { font-size: 1.02rem; line-height: 1.3; font-weight: 850; margin-bottom: 4px; }
+        .review-author { color: #9991a6; font-size: .82rem; margin-bottom: 20px; }
+        .review-block { padding: 13px 0; border-top: 1px solid var(--border); }
+        .review-label { color: #958ca2; text-transform: uppercase; font-size: .68rem; font-weight: 850; letter-spacing: .06em; margin-bottom: 5px; }
+        .review-plus { color: var(--green); font-size: .9rem; font-weight: 750; }
+        .review-minus { color: #6e677a; font-size: .9rem; }
+
+        .cta { padding: 80px 0; color: white; background: linear-gradient(135deg, #261238, #52209a); }
+        .cta h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; }
+        .cta p { color: rgba(255,255,255,.65); max-width: 650px; line-height: 1.7; }
+        .cta-button {
+            display: inline-block; padding: 13px 21px; border-radius: 14px;
+            background: white; color: var(--purple); text-decoration: none;
+            font-weight: 850; transition: .2s ease;
+        }
+        .cta-button:hover { color: var(--pink); transform: translateY(-2px); }
+
+        footer { padding: 35px 0; background: #181020; color: rgba(255,255,255,.55); }
+        footer strong { color: white; }
+
+        @media (max-width: 767px) {
+            .hero { padding-top: 50px; }
+            .university-header { padding: 24px; }
+            .criteria { padding-left: 23px; padding-right: 23px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container py-2">
+        <a href="index.html" class="brand">Вуз<span>Сравни</span></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto gap-lg-3">
+                <li class="nav-item"><a href="index.html" class="nav-link active">Вузы</a></li>
+                <li class="nav-item"><a href="directions.html" class="nav-link">Направления</a></li>
+                <li class="nav-item"><a href="profiway_main.html" class="nav-link">Профориентация</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <span class="hero-badge">✦ Сравнение университетов</span>
+
+        <h1>
+            Найди вуз,<br>
+            который подходит
+            <span class="gradient-text">именно тебе</span>
+        </h1>
+
+        <p class="hero-description mt-4">
+            Сравниваем университеты по понятным критериям:
+            качество обучения, наука, инфраструктура,
+            общежития, сотрудничество с компаниями и другим важным параметрам.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#universities" class="btn-main">Смотреть сравнение</a>
+            <a href="directions.html" class="btn-soft">Сравнить направления →</a>
+            <a href="profiway_main.html" class="btn-soft">Пройти профориентацию →</a>
+        </div>
+    </div>
+</header>
+
+<section class="section pt-3" id="universities">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Сравнение вузов</h2>
+        </div>
+
+        <div class="row g-4">
+            <!-- МГУ -->
+            <div class="col-lg-6">
+                <article class="university-card">
+                    <header class="university-header">
+                        <div class="university-logo">МФТИ</div>
+                        <h2>Московский физико-технический институт</h2>
+                        <div class="university-direction">Направление: Программная инженерия</div>
+
+                        <div class="passing-score">
+                            <span class="passing-score-label">Проходной балл 2025</span>
+                            <span class="passing-score-value">299</span>
+                        </div>
+
+                        <a href="olympiads_mgu.html" class="olympiads-link">
+                            🏆 Олимпиады для поступления →
+                        </a>
+                    </header>
+
+                    <div class="criteria">
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Качество обучения программированию</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Качество обучения математике</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Обеспеченность корпусов техникой</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Вовлечённость преподавателей</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Сотрудничество с компаниями</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Научно-исследовательская деятельность</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Общежития</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Расположение корпусов</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Распределение нагрузки</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- МГТУ -->
+            <div class="col-lg-6">
+                <article class="university-card">
+                    <header class="university-header bauman">
+                        <div class="university-logo">МГТУ</div>
+                        <h2>МГТУ им. Баумана</h2>
+                        <div class="university-direction">Направление: Программная инженерия</div>
+
+                        <div class="passing-score">
+                            <span class="passing-score-label">Проходной балл 2025</span>
+                            <span class="passing-score-value">302</span>
+                        </div>
+
+                        <a href="olympiads_bauman.html" class="olympiads-link">
+                            🏆 Олимпиады для поступления →
+                        </a>
+                    </header>
+
+                    <div class="criteria">
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Качество обучения программированию</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Качество обучения математике</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Обеспеченность корпусов техникой</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Вовлечённость преподавателей</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Сотрудничество с компаниями</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Научно-исследовательская деятельность</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Общежития</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Расположение корпусов</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                        <div class="criterion">
+                            <div class="criterion-top"><span class="criterion-name">Распределение нагрузки</span><span class="criterion-score">10/10</span></div>
+                            <div class="progress-custom"><span style="width:100%"></span></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="reviews-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="hero-badge">💬 Мнение выпускников</span>
+            <h2 class="section-title">Отзывы выпускников</h2>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-xl-3">
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="review-logo logo-mgu">МФТИ</div>
+                        <span class="review-year">2025</span>
+                    </div>
+                    <h3 class="review-university">Московский физико-технический институт</h3>
+                    <div class="review-author">Выпускник</div>
+                    <div class="review-block">
+                        <div class="review-label">Главный плюс</div>
+                        <div class="review-plus">✓ Преподаватели</div>
+                    </div>
+                    <div class="review-block">
+                        <div class="review-label">Главный минус</div>
+                        <div class="review-minus">Отсутствует</div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="review-logo logo-mgu">МФТИ</div>
+                        <span class="review-year">2025</span>
+                    </div>
+                    <h3 class="review-university">Московский физико-технический институт</h3>
+                    <div class="review-author">Выпускник</div>
+                    <div class="review-block">
+                        <div class="review-label">Главный плюс</div>
+                        <div class="review-plus">✓ Преподаватели</div>
+                    </div>
+                    <div class="review-block">
+                        <div class="review-label">Главный минус</div>
+                        <div class="review-minus">Отсутствует</div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="review-logo logo-bauman">МГТУ</div>
+                        <span class="review-year">2025</span>
+                    </div>
+                    <h3 class="review-university">МГТУ им. Баумана</h3>
+                    <div class="review-author">Выпускник</div>
+                    <div class="review-block">
+                        <div class="review-label">Главный плюс</div>
+                        <div class="review-plus">✓ Преподаватели</div>
+                    </div>
+                    <div class="review-block">
+                        <div class="review-label">Главный минус</div>
+                        <div class="review-minus">Отсутствует</div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="review-logo logo-bauman">МГТУ</div>
+                        <span class="review-year">2024</span>
+                    </div>
+                    <h3 class="review-university">МГТУ им. Баумана</h3>
+                    <div class="review-author">Выпускник</div>
+                    <div class="review-block">
+                        <div class="review-label">Главный плюс</div>
+                        <div class="review-plus">✓ Преподаватели</div>
+                    </div>
+                    <div class="review-block">
+                        <div class="review-label">Главный минус</div>
+                        <div class="review-minus">Отсутствует</div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <h2>Не знаешь, с чего начать?</h2>
+                <p class="mt-3 mb-0">
+                    Пройди профориентационные тесты — они помогут понять,
+                    какие направления и типы профессий тебе ближе всего.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="profiway_main.html" class="cta-button">Пройти тесты →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container text-center">
+        <strong>ВузСравни</strong>
+        <span class="mx-2">•</span>
+        Сервис сравнения университетов
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.querySelectorAll('.navbar .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const nav = document.querySelector('#mainNav');
+            if (nav.classList.contains('show')) {
+                bootstrap.Collapse.getOrCreateInstance(nav).hide();
+            }
+        });
+    });
+
+    const animatedElements = document.querySelectorAll('.university-card, .review-card');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: .08 });
+
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity .55s ease, transform .55s ease';
+        observer.observe(el);
+    });
+</script>
+
+</body>
+</html>

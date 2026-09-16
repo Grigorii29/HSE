@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВузСравни — Олимпиады МФТИ для Программной инженерии</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --purple: #6c2bd9;
+            --purple-dark: #421486;
+            --purple-light: #efe7ff;
+            --pink: #f72585;
+            --pink-light: #fff0f7;
+            --orange: #ff7a18;
+            --green: #16a67a;
+            --text: #241b35;
+            --muted: #7d758c;
+            --border: #ebe6f3;
+            --background: #f8f6fc;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(247,37,133,.10), transparent 30%),
+                radial-gradient(circle at 100% 0%, rgba(108,43,217,.12), transparent 30%),
+                var(--background);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .navbar-custom {
+            background: rgba(255,255,255,.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(108,43,217,.08);
+        }
+        .brand { text-decoration: none; color: var(--purple); font-size: 1.35rem; font-weight: 900; letter-spacing: -.5px; }
+        .brand span { color: var(--pink); }
+        .nav-link { color: #625a70; font-weight: 700; }
+        .nav-link:hover, .nav-link.active { color: var(--purple); }
+
+        .hero { padding: 80px 0 40px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 9px 15px; border-radius: 50px;
+            background: var(--pink-light); color: var(--pink);
+            font-size: .82rem; font-weight: 850; margin-bottom: 20px;
+        }
+        .hero h1 {
+            max-width: 900px;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            line-height: 1.05; letter-spacing: -2.4px;
+            font-weight: 950; margin: 0;
+        }
+        .gradient-text {
+            color: transparent;
+            background: linear-gradient(90deg, var(--purple), var(--pink));
+            background-clip: text; -webkit-background-clip: text;
+        }
+        .hero-description { max-width: 760px; color: var(--muted); font-size: 1.06rem; line-height: 1.7; }
+
+        .section { padding: 50px 0 90px; }
+        .section-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; letter-spacing: -1px; }
+        .section-description { max-width: 680px; color: var(--muted); line-height: 1.65; }
+
+        .olympiad-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 12px 35px rgba(50,25,95,.07);
+            transition: .25s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .olympiad-card:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(50,25,95,.12); }
+
+        .olympiad-level {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: .7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            margin-bottom: 16px;
+            width: fit-content;
+        }
+        .level-1 { background: linear-gradient(135deg, #f72585, #ff7a18); color: white; }
+        .level-2 { background: var(--purple-light); color: var(--purple); }
+        .level-3 { background: #e3f7f0; color: var(--green); }
+
+        .olympiad-card h3 {
+            font-size: 1.15rem;
+            font-weight: 900;
+            line-height: 1.35;
+            margin-bottom: 12px;
+        }
+        .olympiad-card p {
+            color: var(--muted);
+            line-height: 1.65;
+            font-size: .92rem;
+            flex: 1;
+            margin-bottom: 18px;
+        }
+
+        .benefit-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 13px;
+            border-radius: 11px;
+            background: var(--pink-light);
+            color: #d51c6d;
+            font-size: .75rem;
+            font-weight: 800;
+            width: fit-content;
+        }
+
+        .info-block {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 12px 35px rgba(50,25,95,.07);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        .info-block p { color: #4a3f5e; margin-bottom: 12px; }
+        .info-block ul { padding-left: 20px; margin: 0 0 14px 0; }
+        .info-block li { margin-bottom: 6px; color: #4a3f5e; }
+
+        .back-button {
+            display: inline-block; padding: 13px 21px; border-radius: 14px;
+            background: white; color: var(--purple); text-decoration: none;
+            font-weight: 850; transition: .2s ease;
+            border: 1px solid var(--border);
+        }
+        .back-button:hover { color: var(--pink); transform: translateY(-2px); }
+
+        footer { padding: 35px 0; background: #181020; color: rgba(255,255,255,.55); }
+        footer strong { color: white; }
+
+        @media (max-width: 767px) {
+            .hero { padding-top: 50px; }
+            .olympiad-card { padding: 22px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container py-2">
+        <a href="index.html" class="brand">Вуз<span>Сравни</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto gap-lg-3">
+                <li class="nav-item"><a href="index.html" class="nav-link">Вузы</a></li>
+                <li class="nav-item"><a href="directions.html" class="nav-link">Направления</a></li>
+                <li class="nav-item"><a href="profiway_main.html" class="nav-link">Профориентация</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <span class="hero-badge">🏆 МФТИ (Физтех)</span>
+        <h1>
+            Олимпиады для поступления<br>
+            на <span class="gradient-text">Программную инженерию</span>
+        </h1>
+        <p class="hero-description mt-4">
+            Победители и призёры перечисленных олимпиад могут получить особые права
+            при поступлении в МФТИ: поступление без вступительных испытаний (БВИ)
+            или 100 баллов по профильному предмету.
+        </p>
+        <div class="mt-4">
+            <a href="index.html" class="back-button">← К сравнению вузов</a>
+        </div>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+
+        <div class="info-block">
+            <h3 style="font-weight:900; margin-bottom:12px;">Какие олимпиады дают льготы?</h3>
+            <p>
+                МФТИ принимает результаты олимпиад школьников, включённых в Перечень
+                Минобрнауки. Для направления «Программная инженерия» (09.03.04)
+                особые права предоставляются победителям и призёрам олимпиад
+                I и II уровня по математике и информатике.
+            </p>
+            <p style="margin-bottom:0;">
+                <b>Важно:</b> для использования льготы необходимо набрать
+                не менее 75 баллов по профильному предмету ЕГЭ
+                (для олимпиады «Физтех» и большинства олимпиад РСОШ).
+            </p>
+        </div>
+
+        <h2 class="section-title mb-4">Основные олимпиады</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-4">
+                <article class="olympiad-card">
+                    <span class="olympiad-level level-1">I уровень</span>
+                    <h3>Всероссийская олимпиада школьников</h3>
+                    <p>
+                        Победители и призёры заключительного этапа ВсОШ по математике
+                        или информатике получают право на поступление без вступительных
+                        испытаний на профильные направления МФТИ.
+                    </p>
+                    <span class="benefit-tag">🎓 БВИ</span>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="olympiad-card">
+                    <span class="olympiad-level level-1">I уровень</span>
+                    <h3>Олимпиада «Физтех» по математике</h3>
+                    <p>
+                        Главная олимпиада МФТИ. Проводится в два этапа: онлайн-отбор
+                        и очный финал. Победители и призёры получают право БВИ
+                        или 100 баллов по математике при условии сдачи ЕГЭ на 75+.
+                    </p>
+                    <span class="benefit-tag">🎓 БВИ / 100 баллов</span>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="olympiad-card">
+                    <span class="olympiad-level level-1">I уровень</span>
+                    <h3>Олимпиада «Физтех.Код будущего»</h3>
+                    <p>
+                        Олимпиада по информатике и программированию, проводимая
+                        МФТИ совместно с компанией 1С. Победители и призёры
+                        получают право БВИ или 100 баллов по информатике.
+                    </p>
+                    <span class="benefit-tag">🎓 БВИ / 100 баллов</span>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="olympiad-card">
+                    <span class="olympiad-level level-2">II уровень</span>
+                    <h3>Олимпиада «Технокубок»</h3>
+                    <p>
+                        Олимпиада по программированию от VK, МФТИ и МГТУ.
+                        Победители и призёры получают льготы при поступлении
+                        в МФТИ (БВИ или 100 баллов по информатике).
+                    </p>
+                    <span class="benefit-tag">🎓 БВИ / 100 баллов</span>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="olympiad-card">
+                    <span class="olympiad-level level-2">II уровень</span>
+                    <h3>Олимпиада «Курчатов»</h3>
+                    <p>
+                        Олимпиада по математике и физике, проводимая при участии
+                        МФТИ. Победители и призёры могут получить 100 баллов
+                        по профильному предмету или право БВИ.
+                    </p>
+                    <span class="benefit-tag">🎓 100 баллов</span>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="olympiad-card">
+                    <span class="olympiad-level level-2">II уровень</span>
+                    <h3>Открытая олимпиада по программированию</h3>
+                    <p>
+                        Олимпиада I уровня по информатике. Победители получают
+                        право БВИ, призёры — 100 баллов по информатике
+                        в более чем 80 вузах, включая МФТИ.
+                    </p>
+                    <span class="benefit-tag">🎓 БВИ / 100 баллов</span>
+                </article>
+            </div>
+
+        </div>
+
+        <div class="info-block mt-5">
+            <h3 style="font-weight:900; margin-bottom:12px;">Проходной балл 2025</h3>
+            <p style="margin-bottom:0;">
+                Проходной балл на бюджетное отделение направления
+                «Программная инженерия» в МФТИ (Высшая школа программной инженерии)
+                в 2025 году составил <b>299 баллов</b>.
+                Для сравнения: в 2024 году — 300, в 2026 — 300.
+            </p>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="index.html" class="back-button">← Вернуться к сравнению вузов</a>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <div class="container text-center">
+        <strong>ВузСравни</strong>
+        <span class="mx-2">•</span>
+        Сервис сравнения университетов
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.navbar .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const nav = document.querySelector('#mainNav');
+            if (nav.classList.contains('show')) {
+                bootstrap.Collapse.getOrCreateInstance(nav).hide();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

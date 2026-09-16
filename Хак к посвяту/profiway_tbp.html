@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ВузСравни — Предпочтительный тип будущей профессии</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="test-styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script_PTBP.js" defer></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container py-2">
+        <a href="index.html" class="brand">Вуз<span>Сравни</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto gap-lg-3">
+                <li class="nav-item"><a href="index.html" class="nav-link">Вузы</a></li>
+                <li class="nav-item"><a href="directions.html" class="nav-link">Направления</a></li>
+                <li class="nav-item"><a href="profiway_main.html" class="nav-link active">Профориентация</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <span class="hero-badge">✦ Тест 3 из 3</span>
+        <h1>Предпочтительный тип <span class="gradient-text">будущей профессии</span></h1>
+        <p class="hero-description mt-4">
+            Опросник помогает понять, какой тип профессии соответствует
+            сложившимся у вас личным качествам: природа, техника,
+            знаковая система, художественный образ или человек.
+        </p>
+        <div class="mt-4 d-flex flex-wrap gap-2">
+            <a href="profiway_main.html" class="btn-soft">← К тестам</a>
+            <a href="profiway_ddo.html" class="btn-soft">К первому тесту →</a>
+        </div>
+    </div>
+</header>
+
+<section class="quiz-container">
+    <div class="container">
+
+        <div class="intro-card">
+            <h3 style="font-weight:900; margin-bottom:12px;">Инструкция</h3>
+            <p>Читайте по порядку пункты и либо соглашайтесь («Да»), либо не соглашайтесь («Точно нет»).</p>
+            <ul>
+                <li>Ответ «Точно нет» может иметь двоякое значение: либо просто отсутствие утверждения («не приходилось»), либо активное отрицание («не люблю это делать»).</li>
+                <li>Если просто отсутствие утверждения — выбирайте «Не знаю».</li>
+            </ul>
+        </div>
+
+        <div class="progress-sticky">
+            <div class="progress-text"><span>Прогресс</span><span id="progressCount">0 / 30</span></div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <form name="opros" onsubmit="return false;">
+
+            <div class="question">
+                <div class="question-number">Вопрос 1</div>
+                <div class="question-title">Легко (без внутренней скованности) вступаю в общение с новыми людьми.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hum1" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hum1" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hum1" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 2</div>
+                <div class="question-title">Охотно и подолгу могу что-нибудь мастерить (или шить, чинить, вязать).</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="tech2" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="tech2" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="tech2" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 3</div>
+                <div class="question-title">Стараюсь придать окружающей меня среде черты красоты; другие считают, что это мне удаётся.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="prir3" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="prir3" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="prir3" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 4</div>
+                <div class="question-title">Охотно и постоянно слежу и ухаживаю за растениями (или животными).</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="prir4" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="prir4" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="prir4" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 5</div>
+                <div class="question-title">Охотно и подолгу могу что-нибудь подсчитывать, вычислять или чертить.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="tech5" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="tech5" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="tech5" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 6</div>
+                <div class="question-title">Охотно провожу время со сверстниками или младшими, когда их нужно чем-то занять, увлечь делом.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hum6" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hum6" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hum6" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 7</div>
+                <div class="question-title">Охотно и часто помогаю старшим по уходу за животными (или растениями).</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="prir7" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="prir7" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="prir7" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 8</div>
+                <div class="question-title">Обычно я делаю мало ошибок в письменных работах.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="znak8" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="znak8" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="znak8" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 9</div>
+                <div class="question-title">Мои изделия обычно вызывают интерес у товарищей, старших.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hud9" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hud9" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hud9" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 10</div>
+                <div class="question-title">Старшие считают, что у меня есть способности к определённой области искусства.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hud10" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hud10" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hud10" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 11</div>
+                <div class="question-title">Охотно читаю о растительном (или животном) мире.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="znak11" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="znak11" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="znak11" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 12</div>
+                <div class="question-title">Активно участвую в художественной самодеятельности.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hud12" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hud12" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hud12" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 13</div>
+                <div class="question-title">Охотно читаю об устройстве и работе механизмов, машин, приборов.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="tech13" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="tech13" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="tech13" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 14</div>
+                <div class="question-title">Охотно и подолгу могу разгадывать головоломки или сидеть над трудными задачами, кроссвордами, ребусами.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="znak14" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="znak14" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="znak14" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 15</div>
+                <div class="question-title">Легко улаживаю разногласия между сверстниками или младшими.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hum15" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hum15" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hum15" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 16</div>
+                <div class="question-title">Старшие считают, что у меня есть способности к работе с техникой.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="tech16" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="tech16" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="tech16" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 17</div>
+                <div class="question-title">Результаты моего художественного творчества одобряют и совершенно незнакомые люди.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hud17" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hud17" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hud17" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 18</div>
+                <div class="question-title">Старшие считают, что у меня есть способности к работе с биологическими объектами.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="prir18" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="prir18" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="prir18" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 19</div>
+                <div class="question-title">Обычно, как считают, мне удаётся подробно и ясно для других излагать мысли в письменной форме.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="znak19" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="znak19" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="znak19" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 20</div>
+                <div class="question-title">Почти никогда ни с кем не ссорюсь.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hum20" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hum20" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hum20" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 21</div>
+                <div class="question-title">Результаты моего технического творчества одобряют незнакомые люди.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="tech21" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="tech21" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="tech21" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 22</div>
+                <div class="question-title">Без особого труда усваиваю иностранные слова.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="znak22" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="znak22" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="znak22" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 23</div>
+                <div class="question-title">Мне часто случается помогать даже незнакомым людям.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hum23" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hum23" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hum23" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 24</div>
+                <div class="question-title">Подолгу, не уставая, могу заниматься любимой художественной работой (музыкой, рисованием и т. п.).</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hud24" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hud24" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hud24" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 25</div>
+                <div class="question-title">Стараюсь повлиять на ход развития растительных или животных организмов, улучшить, изменить их.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="prir25" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="prir25" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="prir25" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 26</div>
+                <div class="question-title">Люблю разбираться в устройстве механизмов, машин, приборов.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="tech26" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="tech26" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="tech26" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 27</div>
+                <div class="question-title">Мне обычно удаётся убедить сверстников или младших в целесообразности того или иного плана действий.</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hum27" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hum27" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hum27" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 28</div>
+                <div class="question-title">Охотно наблюдаю за животными (или рассматриваю растения).</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="prir28" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="prir28" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="prir28" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 29</div>
+                <div class="question-title">Охотно читаю такую литературу, которую многие считают «скучной» (научно-популярную, литературно-критическую, публицистику).</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="znak29" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="znak29" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="znak29" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Вопрос 30</div>
+                <div class="question-title">Стараюсь понять секреты мастерства работников искусства и воспроизводить их действия (делать как они).</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="hud30" value="1" required /><span>Да</span></label>
+                    <label class="option"><input type="radio" name="hud30" value="0" required /><span>Не знаю</span></label>
+                    <label class="option"><input type="radio" name="hud30" value="-1" required /><span>Точно нет</span></label>
+                </div>
+            </div>
+
+            <div class="submit-wrap">
+                <button type="button" class="btn-submit" onclick="check()">Проверить результат</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- RESULT -->
+<section class="result-section" id="result">
+    <div class="container">
+        <div class="text-center mb-4">
+            <span class="hero-badge">✦ Результат</span>
+            <h2 class="section-title mt-2">Твой тип профессии</h2>
+        </div>
+
+        <div class="result-card">
+            <div class="chart-container"><canvas id="chart"></canvas></div>
+            <div class="result-note">
+                <ul>
+                    <li><b>(−8) — (−5)</b> — склонность не выражена</li>
+                    <li><b>(−4) — 0</b> — низкий уровень склонности</li>
+                    <li><b>0 — 4</b> — средний уровень склонности</li>
+                    <li><b>5 — 8</b> — высокий уровень склонности</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="result-card interpretation">
+            <h3>Содержательная интерпретация</h3>
+
+            <h4>Человек — природа</h4>
+            <p>Если вы любите работать в саду, огороде, ухаживать за растениями, животными, любите биологию — присмотритесь к профессиям типа «человек–природа»: агроном, микробиолог, зоотехник, лесовод, цветовод, ветеринар и др. Важны воображение, наблюдательность, терпение, настойчивость.</p>
+
+            <h4>Человек — техника</h4>
+            <p>Если вам нравятся лабораторные работы по физике, химии, электротехнике, вы делаете модели и разбираетесь в бытовой технике — вам подойдут профессии «человек–техника». Важны координация движений, техническое мышление, точность восприятия.</p>
+
+            <h4>Человек — знаковая система</h4>
+            <p>Если вы любите вычисления, чертежи, схемы, картотеки, программирование, экономику или статистику — это ваш тип. Важны хорошая память, концентрация внимания, логическое мышление, усидчивость.</p>
+
+            <h4>Человек — художественный образ</h4>
+            <p>Профессии, связанные с созданием, проектированием, воспроизведением художественных произведений: писатель, художник, композитор, модельер, архитектор, актёр, дизайнер. Важны творческое воображение, зрительная память, наблюдательность.</p>
+
+            <h4>Человек — человек</h4>
+            <p>Воспитание, обучение, медицинское и бытовое обслуживание, информирование, защита общества: учитель, врач, продавец, юрист, полицейский. Важны умение общаться, выдержка, доброжелательность, способность понимать людей.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container text-center">
+        <strong>ВузСравни</strong>
+        <span class="mx-2">•</span>
+        Сервис сравнения университетов
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.navbar .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const nav = document.querySelector('#mainNav');
+            if (nav.classList.contains('show')) {
+                bootstrap.Collapse.getOrCreateInstance(nav).hide();
+            }
+        });
+    });
+
+    const questions = document.querySelectorAll('.question');
+    const progressFill = document.getElementById('progressFill');
+    const progressCount = document.getElementById('progressCount');
+
+    function updateProgress() {
+        const answered = document.querySelectorAll('.question.answered').length;
+        const total = questions.length;
+        progressFill.style.width = (answered / total * 100) + '%';
+        progressCount.textContent = answered + ' / ' + total;
+    }
+
+    questions.forEach(q => {
+        q.querySelectorAll('input[type="radio"]').forEach(inp => {
+            inp.addEventListener('change', () => {
+                q.classList.add('answered');
+                updateProgress();
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
